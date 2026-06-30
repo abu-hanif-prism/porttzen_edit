@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&family=Inter:wght@400;500;600&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:#fff;}
+
+#pz-loading{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#fff;z-index:9999;flex-direction:column;gap:1.25rem;}
+.pz-spinner{width:34px;height:34px;border:2.5px solid #E3ECE8;border-top-color:#659287;border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.pz-loading-text{font-family:'Inter',system-ui,sans-serif;font-size:.7rem;font-weight:500;color:#9AA8A3;letter-spacing:.16em;text-transform:uppercase;}
+
+#pz-coming-soon{min-height:100vh;display:none;align-items:center;justify-content:center;flex-direction:column;gap:1rem;text-align:center;padding:3rem;background:#fff;}
+.cs-eyebrow{font-family:'Inter',system-ui,sans-serif;font-size:.68rem;font-weight:600;color:#659287;letter-spacing:.2em;text-transform:uppercase;display:flex;align-items:center;gap:.75rem;justify-content:center;}
+.cs-eyebrow::before,.cs-eyebrow::after{content:'';display:block;width:20px;height:1px;background:#B1D3B9;}
+.cs-title{font-family:'Space Grotesk',system-ui,sans-serif;font-size:clamp(2.2rem,6vw,3.6rem);font-weight:500;color:#1D3530;letter-spacing:-.01em;margin:.5rem 0;}
+.cs-title em{display:block;font-style:normal;color:#6B8079;font-weight:400;}
+.cs-sub{font-family:'Inter',system-ui,sans-serif;font-size:.88rem;color:#6B8079;font-weight:400;max-width:320px;line-height:1.7;margin-top:.25rem;}
+.cs-dot{width:7px;height:7px;border-radius:50%;background:#659287;margin-top:.5rem;}
+</style>
+</head>
+<body>
+
+<div id="pz-loading">
+  <div class="pz-spinner"></div>
+  <span class="pz-loading-text">Loading portfolio</span>
+</div>
+
+<div id="pz-coming-soon">
+  <span class="cs-eyebrow">Coming Soon</span>
+  <div class="cs-title">Something<br><em>beautiful</em></div>
+  <p class="cs-sub">This portfolio is being curated. Check back soon.</p>
+  <div class="cs-dot"></div>
+</div>
+
+<!-- Template HTML is injected here -->
+<div id="pz-host" style="display:none"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+const SUPABASE_URL  = 'https://psuvjwtsgguaxtfmmrun.supabase.co';
+const SUPABASE_ANON = 'sb_publishable_M8EK0_yfbVRn-DOZfvnADA_QKQyvXgS';
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+const esc = t => String(t ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const imgUrl = path => {
+  if (!path) return '';
+  if (typeof path === 'object') path = path.src || '';
+  return path.startsWith('http') ? path : window.location.origin + '/' + path;
+};
+window._imgUrl = imgUrl; // accessible to injected template scripts
+
+function getSubdomain() {
+  const h = window.location.hostname;
+  if (h === 'localhost' || h === '127.0.0.1') return new URLSearchParams(window.location.search).get('sub') || null;
+  const parts = h.split('.');
+  return parts.length >= 3 ? parts[0] : null;
+}
+
+function showComingSoon() {
+  document.getElementById('pz-loading').style.display = 'none';
+  document.getElementById('pz-coming-soon').style.display = 'flex';
+}
+function showPortfolio() {
+  document.getElementById('pz-loading').style.display = 'none';
+  document.getElementById('pz-host').style.display = '';
+}
+
+// ── Schema field resolution (mirrors schema.ts) ───────────────────────────────
+function resolveField(content, field) {
+  return field.source === 'flat'
+    ? (content[field.key] ?? null)
+    : (content.extra_fields ?? {})[field.key] ?? null;
+}
+function buildFieldMap(schema) {
+  const map = {};
+  for (const sec of schema.sections)
+    for (const f of sec.fields)
+      map[f.key] = f;
+  return map;
+}
+
+// ── Generic hydration ─────────────────────────────────────────────────────────
+function hydrateTemplate(content, schema) {
+  const fields = buildFieldMap(schema);
+  const host   = document.getElementById('pz-host');
+
+  // 1. Scalar data-field elements
+  host.querySelectorAll('[data-field]').forEach(el => {
+    const field = fields[el.dataset.field];
+    if (!field) return;
+    const val = resolveField(content, field);
+    if (val === null || val === undefined || val === '') return;
+    applyScalarField(el, field, val);
+  });
+
+  // 2. Repeater containers
+  host.querySelectorAll('[data-repeater]').forEach(container => {
+    const field = fields[container.dataset.repeater];
+    if (!field || field.type !== 'repeater') return;
+    const items = (resolveField(content, field) ?? []);
+    const tmpl  = container.querySelector('[data-repeater-item]');
+    if (!tmpl) return;
+    hydrateRepeater(container, tmpl, items, field);
+  });
+
+  // document.title from logo_text
+  const logoField = fields['logo_text'];
+  if (logoField) {
+    const logoVal = resolveField(content, logoField);
+    if (logoVal) document.title = logoVal + ' — Portfolio';
+  }
+}
+
+function applyScalarField(el, field, val) {
+  if (field.type === 'image') {
+    const src = typeof val === 'string' ? val : (val?.src ?? '');
+    if (!src) return;
+    if (el.tagName === 'IMG') {
+      el.src = imgUrl(src);
+      applyCrop(el, val);
+    } else {
+      // Container (e.g. .about-img-frame): find img child, set src, show container
+      const img = el.querySelector('img');
+      if (img) { img.src = imgUrl(src); applyCrop(img, val); }
+      el.style.display = 'block';
+    }
+  } else if (field.type === 'link') {
+    if (el.tagName === 'A') el.href = val || '#';
+    else el.textContent = val;
+  } else {
+    el.textContent = val;
+  }
+}
+
+function applyCrop(img, val) {
+  if (val && typeof val === 'object' && val.x !== undefined) {
+    img.style.transform = `translate(${val.x}%, ${val.y ?? 0}%) scale(${val.scale ?? 1})`;
+    img.style.transformOrigin = 'center center';
+  }
+}
+
+const ROMAN = ['I','II','III','IV','V','VI','VII','VIII','IX','X'];
+
+function hydrateRepeater(container, tmpl, items, field) {
+  container.innerHTML = '';
+  if (items.length === 0) return;
+  items.forEach((item, idx) => {
+    const el = tmpl.cloneNode(true);
+    el.removeAttribute('data-repeater-item');
+
+    // Roman numeral index markers
+    el.querySelectorAll('[data-repeater-index]').forEach(n => { n.textContent = ROMAN[idx] || String(idx + 1); });
+
+    // Root element subfield (e.g. <a data-subfield="href">)
+    if (el.hasAttribute('data-subfield')) applySubfield(el, el.dataset.subfield, item);
+
+    // Inner subfields
+    el.querySelectorAll('[data-subfield]').forEach(sub => applySubfield(sub, sub.dataset.subfield, item));
+
+    container.appendChild(el);
+  });
+}
+
+function applySubfield(el, subKey, item) {
+  const val = item[subKey];
+  if (val === undefined || val === null || val === '') return;
+  if (el.tagName === 'IMG') {
+    const src = typeof val === 'string' ? val : (val?.src ?? '');
+    if (src) { el.src = imgUrl(src); applyCrop(el, item); }
+  } else if (el.tagName === 'A') {
+    el.href = val || '#';
+    if (typeof val === 'string' && (val.startsWith('http') || val.startsWith('mailto') || val.startsWith('tel'))) {
+      if (val.startsWith('http')) el.target = '_blank';
+    }
+  } else {
+    el.textContent = val;
+  }
+}
+
+// ── Main ──────────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('footer-year') && (document.getElementById('footer-year').textContent = new Date().getFullYear());
+  initPortfolio();
+});
+
+async function initPortfolio() {
+  const sub = getSubdomain();
+  if (!sub) { showComingSoon(); return; }
+
+  try {
+    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+    // portfolio_content carries template_id (populated by DB migration)
+    const { data: content, error: ce } = await sb.from('portfolio_content').select('*').eq('subdomain', sub).single();
+    if (ce || !content?.template_id) { showComingSoon(); return; }
+
+    // Fetch schema + template HTML in parallel
+    const [schemaRes, htmlRes] = await Promise.all([
+      sb.from('templates').select('schema').eq('id', content.template_id).single(),
+      fetch('/templates/' + content.template_id + '.html'),
+    ]);
+
+    if (schemaRes.error || !schemaRes.data?.schema) { showComingSoon(); return; }
+    if (!htmlRes.ok) { showComingSoon(); return; }
+
+    const schema  = schemaRes.data.schema;
+    const html    = await htmlRes.text();
+
+    // Inject template HTML
+    const host = document.getElementById('pz-host');
+    host.innerHTML = html;
+    // Re-run injected <script> blocks (innerHTML doesn't execute them)
+    host.querySelectorAll('script').forEach(old => {
+      const s = document.createElement('script');
+      s.textContent = old.textContent;
+      old.replaceWith(s);
+    });
+
+    // Generic hydration: walk schema → data-field / data-repeater / data-gallery
+    hydrateTemplate(content, schema);
+
+    // Template-specific init (defined by injected script)
+    if (typeof window.templateInit === 'function') {
+      window.templateInit(content);
+    }
+
+    showPortfolio();
+  } catch (err) {
+    console.error('Portfolio init error:', err);
+    showComingSoon();
+  }
+}
+</script>
+</body>
+</html>
