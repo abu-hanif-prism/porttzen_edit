@@ -1,0 +1,454 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Barlow:wght@300;400;500&display=swap');
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --black:#0c0807;--bg:#110d0c;--bg2:#1a1211;--bg3:#231817;--bg4:#2d1f1e;
+  --red:#c0392b;--red2:#e74c3c;--red3:#ff6b5b;
+  --red-dim:rgba(192,57,43,0.15);--red-border:rgba(192,57,43,0.25);
+  --text:#f0e8e6;--text2:#b8a8a5;--text3:#7a6562;--text4:#4a3533;
+  --font-d:'Cormorant Garamond',Georgia,serif;--font-b:'Barlow',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--black);color:var(--text);font-family:var(--font-b);-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.5rem 3rem;}
+nav::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(to bottom,rgba(12,8,7,0.9) 0%,transparent 100%);pointer-events:none;z-index:-1;}
+.logo{font-family:var(--font-d);font-size:1.3rem;font-weight:300;letter-spacing:0.12em;color:var(--text);text-transform:uppercase;}
+.nav-links{display:flex;gap:2rem;list-style:none;}
+.nav-links a{font-family:var(--font-b);font-size:0.72rem;font-weight:400;color:var(--text3);text-decoration:none;letter-spacing:0.14em;text-transform:uppercase;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--text);}
+.nav-dot{width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 8px var(--red);animation:glow 2.5s ease-in-out infinite;}
+@keyframes glow{0%,100%{box-shadow:0 0 6px var(--red)}50%{box-shadow:0 0 18px var(--red2)}}
+
+.hero{height:100vh;display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden;}
+.hero-img-col{position:relative;overflow:hidden;}
+.hero-slideshow{position:relative;width:100%;height:100%;}
+.hero-slide{position:absolute;inset:0;opacity:0;transition:opacity .9s ease;pointer-events:none;}
+.hero-slide.active{opacity:1;pointer-events:auto;}
+.hero-slide img{width:100%;height:100%;object-fit:cover;display:block;}
+.hero-slide::before{content:'';position:absolute;inset:0;background:rgba(120,20,10,0.18);z-index:1;pointer-events:none;}
+.hero-slide::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,transparent 55%,var(--black) 100%);z-index:2;pointer-events:none;}
+.hero-dots{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);display:flex;gap:.5rem;z-index:10;}
+.hero-dot{width:6px;height:6px;border-radius:50%;background:rgba(240,232,230,.3);border:none;cursor:pointer;padding:0;transition:background .25s,transform .25s;}
+.hero-dot.active{background:var(--red2);transform:scale(1.35);}
+.hero-img-placeholder{width:100%;height:100%;background:linear-gradient(135deg,var(--bg2) 0%,var(--bg3) 40%,var(--bg4) 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;position:relative;}
+.hero-img-placeholder::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,transparent 60%,var(--black) 100%);}
+.hero-img-placeholder::before{content:'';position:absolute;inset:0;background:rgba(120,20,10,0.18);z-index:1;}
+.img-ph-icon{font-size:3rem;color:var(--text4);opacity:.5;}
+.img-ph-label{font-size:.7rem;color:var(--text4);letter-spacing:.1em;text-transform:uppercase;font-family:var(--font-b);}
+.hero-text-col{display:flex;flex-direction:column;justify-content:center;padding:0 4rem 0 3.5rem;position:relative;}
+.hero-eyebrow{font-family:var(--font-b);font-size:0.68rem;font-weight:400;color:var(--red2);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:2rem;display:flex;align-items:center;gap:.85rem;}
+.hero-eyebrow::before{content:'';display:block;width:28px;height:1px;background:var(--red);}
+.hero h1{font-family:var(--font-d);font-size:clamp(3.5rem,6vw,7rem);font-weight:300;line-height:1.0;letter-spacing:0.02em;color:var(--text);margin-bottom:1rem;}
+.hero h1 em{display:block;font-style:italic;color:var(--text2);font-weight:300;}
+.hero-sub{font-size:.88rem;font-weight:300;color:var(--text3);line-height:1.85;max-width:300px;margin-bottom:3rem;margin-top:.75rem;}
+.hero-ctas{display:flex;gap:1rem;flex-wrap:wrap;}
+.btn-red{padding:.75rem 2rem;background:var(--red);color:var(--text);font-family:var(--font-b);font-size:.75rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border:none;transition:background .2s;}
+.btn-red:hover{background:var(--red2);}
+.btn-ghost-red{padding:.75rem 2rem;background:transparent;color:var(--text3);font-family:var(--font-b);font-size:.75rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border:1px solid var(--text4);transition:border-color .2s,color .2s;}
+.btn-ghost-red:hover{border-color:var(--red);color:var(--text);}
+.hero-scroll{position:absolute;bottom:2.5rem;left:3.5rem;display:flex;align-items:center;gap:.75rem;font-family:var(--font-b);font-size:.65rem;color:var(--text4);letter-spacing:.14em;text-transform:uppercase;}
+.scroll-line{width:40px;height:1px;background:var(--text4);}
+
+.sec{padding:6rem 3rem;}
+.sec-label{font-family:var(--font-b);font-size:.65rem;font-weight:400;color:var(--red2);letter-spacing:.2em;text-transform:uppercase;margin-bottom:1.25rem;display:flex;align-items:center;gap:.75rem;}
+.sec-label::before{content:'';display:block;width:20px;height:1px;background:var(--red);}
+.sec-title{font-family:var(--font-d);font-size:clamp(2.2rem,4vw,3.8rem);font-weight:300;letter-spacing:.02em;color:var(--text);line-height:1.1;margin-bottom:.5rem;}
+.sec-title em{font-style:italic;color:var(--text2);}
+.divider{border:none;border-top:1px solid var(--bg3);}
+
+.gallery-sec{padding:0 0 5rem;}
+.gallery-intro{padding:4rem 3rem 2.5rem;display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;border-bottom:1px solid var(--bg3);}
+.gallery-count{font-size:.72rem;color:var(--text3);font-family:var(--font-b);letter-spacing:.08em;}
+.gallery-grid{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:80px;gap:3px;padding:3px;}
+.img-cell{overflow:hidden;position:relative;cursor:pointer;}
+.img-cell:hover .img-overlay{opacity:1;}
+.img-cell:hover .img-ph-inner{transform:scale(1.04);}
+.img-cell img.cell-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;}
+.img-cell:hover img.cell-img{transform:scale(1.04);}
+.img-ph-inner{width:100%;height:100%;transition:transform .5s ease;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.5rem;font-size:.65rem;color:var(--text4);font-family:var(--font-b);letter-spacing:.08em;text-transform:uppercase;position:relative;}
+.img-ph-inner::before{content:'';position:absolute;inset:0;background:rgba(120,20,10,0.12);z-index:1;}
+.img-ph-inner span{position:relative;z-index:2;}
+.img-overlay{position:absolute;inset:0;background:rgba(12,8,7,0.65);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.35rem;opacity:0;transition:opacity .3s;z-index:3;}
+.img-overlay-title{font-family:var(--font-d);font-size:1rem;font-weight:300;color:var(--text);letter-spacing:.06em;font-style:italic;}
+.img-overlay-cat{font-family:var(--font-b);font-size:.6rem;color:var(--red2);letter-spacing:.18em;text-transform:uppercase;}
+
+.c1{grid-column:span 4;grid-row:span 5;background:var(--bg2);}
+.c2{grid-column:span 4;grid-row:span 3;background:var(--bg3);}
+.c3{grid-column:span 4;grid-row:span 3;background:var(--bg4);}
+.c4{grid-column:span 4;grid-row:span 2;background:var(--bg2);}
+.c5{grid-column:span 4;grid-row:span 2;background:var(--bg3);}
+.c6{grid-column:span 6;grid-row:span 5;background:var(--bg4);}
+.c7{grid-column:span 6;grid-row:span 5;background:var(--bg2);}
+.c8{grid-column:span 3;grid-row:span 4;background:var(--bg3);}
+.c9{grid-column:span 3;grid-row:span 4;background:var(--bg4);}
+.c10{grid-column:span 6;grid-row:span 4;background:var(--bg2);}
+.c11{grid-column:span 4;grid-row:span 3;background:var(--bg3);}
+.c12{grid-column:span 4;grid-row:span 3;background:var(--bg4);}
+.c13{grid-column:span 4;grid-row:span 3;background:var(--bg2);}
+.c14{grid-column:span 5;grid-row:span 4;background:var(--bg3);}
+.c15{grid-column:span 7;grid-row:span 4;background:var(--bg4);}
+.c1 .img-ph-inner::before{background:rgba(140,10,10,0.14);}
+.c6 .img-ph-inner::before{background:rgba(100,15,10,0.2);}
+.c10 .img-ph-inner::before{background:rgba(160,20,10,0.1);}
+.c14 .img-ph-inner::before{background:rgba(120,20,10,0.18);}
+
+.about-sec{display:grid;grid-template-columns:1fr 1fr;min-height:80vh;border-top:1px solid var(--bg3);}
+.about-left{border-right:1px solid var(--bg3);padding:5rem 4rem;display:flex;flex-direction:column;justify-content:center;overflow:hidden;}
+.about-img-frame{margin:-5rem -4rem 2.5rem;width:calc(100% + 8rem);aspect-ratio:3/2;overflow:hidden;display:none;}
+.about-img-frame img{width:100%;height:100%;object-fit:cover;display:block;}
+.about-right{padding:5rem 4rem;display:flex;flex-direction:column;justify-content:space-between;}
+.about-right p{font-size:.9rem;font-weight:300;color:var(--text2);line-height:1.95;margin-bottom:1.1rem;}
+.about-quote{font-family:var(--font-d);font-size:1.5rem;font-weight:300;font-style:italic;color:var(--text);line-height:1.5;border-left:2px solid var(--red);padding-left:1.5rem;margin:2rem 0;}
+.about-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--bg3);border-left:1px solid var(--bg3);}
+.astat{padding:1.5rem 1.25rem;border-right:1px solid var(--bg3);border-bottom:1px solid var(--bg3);}
+.astat-n{font-family:var(--font-d);font-size:2.5rem;font-weight:300;color:var(--text);letter-spacing:-.02em;line-height:1;}
+.astat-l{font-size:.65rem;font-weight:400;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-top:.35rem;}
+
+.services-sec{border-top:1px solid var(--bg3);}
+.services-grid-inner{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--bg3);margin-top:3rem;}
+.svc{padding:2.5rem;border-right:1px solid var(--bg3);transition:background .2s;}
+.svc:hover{background:var(--bg2);}
+.svc-num{font-family:var(--font-b);font-size:.65rem;color:var(--text4);letter-spacing:.1em;margin-bottom:2rem;}
+.svc h3{font-family:var(--font-d);font-size:1.4rem;font-weight:300;font-style:italic;color:var(--text);margin-bottom:.75rem;line-height:1.2;}
+.svc p{font-size:.82rem;color:var(--text3);line-height:1.8;font-weight:300;}
+.svc-price{display:inline-block;margin-top:1.5rem;font-family:var(--font-b);font-size:.72rem;color:var(--red2);letter-spacing:.08em;}
+
+.contact-sec{border-top:1px solid var(--bg3);display:grid;grid-template-columns:1fr 1fr;}
+.contact-left-col{padding:5rem 4rem;border-right:1px solid var(--bg3);display:flex;flex-direction:column;justify-content:space-between;}
+.contact-left-col h2{font-family:var(--font-d);font-size:clamp(3rem,5vw,5.5rem);font-weight:300;line-height:1.0;letter-spacing:.02em;color:var(--text);}
+.contact-left-col h2 em{display:block;font-style:italic;color:var(--text2);}
+.contact-right-col{padding:5rem 4rem;display:flex;flex-direction:column;justify-content:center;gap:1.25rem;}
+.c-link{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 1.5rem;border:1px solid var(--bg3);text-decoration:none;background:var(--bg2);transition:border-color .2s,background .2s;}
+.c-link:hover{border-color:var(--red-border);background:var(--bg3);}
+.c-link-left{display:flex;flex-direction:column;gap:.25rem;}
+.c-link-lbl{font-size:.62rem;color:var(--text4);letter-spacing:.12em;text-transform:uppercase;font-family:var(--font-b);}
+.c-link-val{font-size:.88rem;color:var(--text);font-weight:400;}
+.c-arrow{font-size:1.1rem;color:var(--text4);transition:color .2s,transform .2s;}
+.c-link:hover .c-arrow{color:var(--red2);transform:translate(3px,-3px);}
+
+footer{border-top:1px solid var(--bg3);display:flex;align-items:center;justify-content:space-between;padding:1.75rem 3rem;}
+.footer-logo{font-family:var(--font-d);font-size:1rem;font-weight:300;letter-spacing:.12em;text-transform:uppercase;color:var(--text2);}
+footer p{font-size:.7rem;color:var(--text4);letter-spacing:.06em;}
+.footer-red{color:var(--red);}
+
+#lightbox{display:none;position:fixed;inset:0;z-index:999;background:rgba(12,8,7,0.96);align-items:center;justify-content:center;flex-direction:column;gap:1.5rem;}
+#lightbox.open{display:flex;}
+.lb-inner{max-width:700px;width:90%;aspect-ratio:3/2;background:var(--bg2);border:1px solid var(--bg3);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.75rem;position:relative;overflow:hidden;}
+.lb-inner img{width:100%;height:100%;object-fit:contain;display:none;}
+.lb-inner img.lb-visible{display:block;}
+.lb-ph{display:flex;flex-direction:column;align-items:center;gap:.75rem;}
+.lb-ph.lb-hidden{display:none;}
+.lb-ph-icon{font-size:3.5rem;color:var(--text4);}
+.lb-ph-label{font-size:.72rem;color:var(--text4);letter-spacing:.1em;text-transform:uppercase;font-family:var(--font-b);}
+.lb-title{font-family:var(--font-d);font-size:1.2rem;font-weight:300;font-style:italic;color:var(--text);}
+.lb-close{position:absolute;top:1.5rem;right:1.5rem;width:40px;height:40px;border:1px solid var(--bg3);background:transparent;color:var(--text3);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color .15s,color .15s;z-index:2;}
+.lb-close:hover{border-color:var(--red);color:var(--text);}
+.lb-nav{display:flex;gap:1rem;}
+.lb-btn{padding:.55rem 1.5rem;border:1px solid var(--bg3);background:transparent;color:var(--text3);font-family:var(--font-b);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:border-color .15s,color .15s;}
+.lb-btn:hover{border-color:var(--red);color:var(--text);}
+
+@media(max-width:900px){
+  nav{padding:1.25rem 1.5rem;}.nav-links{display:none;}
+  .hero{grid-template-columns:1fr;height:auto;}.hero-img-col{height:55vw;min-height:260px;}.hero-text-col{padding:3rem 1.5rem 4rem;}
+  .gallery-intro{flex-direction:column;gap:1rem;padding:2.5rem 1.5rem;}.gallery-grid{grid-auto-rows:60px;}
+  .about-sec{grid-template-columns:1fr;}.about-left{border-right:none;border-bottom:1px solid var(--bg3);padding:3.5rem 1.5rem;}.about-img-frame{margin:-3.5rem -1.5rem 2rem;width:calc(100% + 3rem);}.about-right{padding:3.5rem 1.5rem;}
+  .services-grid-inner{grid-template-columns:1fr;}.svc{border-right:none;border-bottom:1px solid var(--bg3);}
+  .contact-sec{grid-template-columns:1fr;}.contact-left-col{border-right:none;border-bottom:1px solid var(--bg3);padding:3.5rem 1.5rem;}.contact-right-col{padding:3.5rem 1.5rem;}
+  .sec{padding:4rem 1.5rem;}
+  footer{flex-direction:column;gap:.75rem;padding:1.5rem;text-align:center;}
+}
+</style>
+
+<!-- NAV -->
+<nav>
+  <div class="logo" data-field="logo_text">Portfolio</div>
+  <ul class="nav-links">
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-dot"></div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-img-col" id="hero-img-col">
+    <div class="hero-img-placeholder" id="hero-placeholder">
+      <span class="img-ph-icon">⬡</span>
+      <span class="img-ph-label">Hero Image</span>
+    </div>
+    <!-- hero_images repeater: generic engine fills .hero-slide elements here -->
+    <div class="hero-slideshow" data-repeater="hero_images">
+      <div class="hero-slide" data-repeater-item>
+        <img data-subfield="src" data-apply-crop alt="" />
+      </div>
+    </div>
+  </div>
+  <div class="hero-text-col">
+    <p class="hero-eyebrow" data-field="hero_eyebrow">Photographer</p>
+    <h1>
+      <span data-field="hero_name">Light.</span><br>
+      <em data-field="hero_name_italic">Shadow.</em>
+    </h1>
+    <p class="hero-sub" data-field="hero_subtitle">Capturing moments through light and shadow.</p>
+    <div class="hero-ctas">
+      <a class="btn-red" data-field="hero_cta1_href" href="#gallery">
+        <span data-field="hero_cta1_label">View Gallery</span>
+      </a>
+      <a class="btn-ghost-red" data-field="hero_cta2_href" href="#contact">
+        <span data-field="hero_cta2_label">Book a session</span>
+      </a>
+    </div>
+    <div class="hero-scroll">
+      <span class="scroll-line"></span>
+      Scroll to explore
+    </div>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<div class="gallery-sec" id="gallery">
+  <div class="gallery-intro">
+    <div class="gallery-intro-left">
+      <div class="sec-label">Selected work</div>
+      <h2 class="sec-title">The <em>Collection</em></h2>
+    </div>
+    <p class="gallery-count" id="gallery-count"></p>
+  </div>
+  <div class="gallery-grid" data-repeater="gallery_images">
+    <div class="img-cell" data-repeater-item>
+      <img class="cell-img" data-subfield="src" alt="" style="display:none" />
+      <div class="img-ph-inner"><span>⬡</span><span>Photo</span></div>
+      <div class="img-overlay">
+        <span class="img-overlay-title" data-subfield="title"></span>
+        <span class="img-overlay-cat" data-subfield="category"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div class="about-sec" id="about">
+  <div class="about-left">
+    <!-- data-field on the frame div: renderer sets img src AND shows frame when value exists -->
+    <div class="about-img-frame" data-field="about_image">
+      <img alt="About" />
+    </div>
+    <div class="sec-label">About</div>
+    <h2 class="sec-title">
+      <span data-field="about_title">A photographer who</span><br>
+      <em data-field="about_title_italic">chases feeling,</em><br>
+      not perfection.
+    </h2>
+    <!-- stats repeater -->
+    <div class="about-stats" data-repeater="stats">
+      <div class="astat" data-repeater-item>
+        <div class="astat-n" data-subfield="number">0</div>
+        <div class="astat-l" data-subfield="label">Stat</div>
+      </div>
+    </div>
+  </div>
+  <div class="about-right">
+    <div>
+      <p data-field="about_bio_1">I believe a photograph should make you feel something before you understand it.</p>
+      <div class="about-quote" data-field="about_quote">"The best photograph…"</div>
+      <p data-field="about_bio_2">Based between Berlin and Dhaka.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<div class="sec services-sec" id="services">
+  <div class="sec-label">Services</div>
+  <h2 class="sec-title">What I <em>offer</em></h2>
+  <div class="services-grid-inner" data-repeater="services">
+    <div class="svc" data-repeater-item>
+      <p class="svc-num" data-repeater-index></p>
+      <h3 data-subfield="title">Title</h3>
+      <p data-subfield="description">Description</p>
+      <span class="svc-price" data-subfield="price">Price</span>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="contact-sec" id="contact">
+  <div class="contact-left-col">
+    <div>
+      <div class="sec-label">Contact</div>
+      <h2>
+        <span data-field="contact_heading">Let's make</span><br>
+        <em data-field="contact_heading_italic">something real.</em>
+      </h2>
+    </div>
+    <p data-field="contact_subtext" style="font-size:.82rem;color:var(--text3);font-weight:300;line-height:1.85;max-width:300px;">Available for bookings.</p>
+  </div>
+  <div class="contact-right-col" data-repeater="contact_links">
+    <a href="#" class="c-link" data-repeater-item data-subfield="href">
+      <div class="c-link-left">
+        <span class="c-link-lbl" data-subfield="label">Label</span>
+        <span class="c-link-val" data-subfield="value">Value</span>
+      </div>
+      <span class="c-arrow">↗</span>
+    </a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo" data-field="footer_name">Portfolio</div>
+  <p>© <span id="footer-year"></span> — All images reserved</p>
+  <p><span class="footer-red">●</span> <span data-field="footer_status">Available for bookings</span></p>
+</footer>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" onclick="closeLB(event)">
+  <div class="lb-inner" onclick="event.stopPropagation()">
+    <button class="lb-close" onclick="closeLB()">✕</button>
+    <img id="lb-img" alt="" />
+    <div class="lb-ph" id="lb-ph">
+      <div class="lb-ph-icon">⬡</div>
+      <div class="lb-ph-label" id="lb-label">placeholder</div>
+    </div>
+    <div class="lb-title" id="lb-title"></div>
+  </div>
+  <div class="lb-nav">
+    <button class="lb-btn" onclick="closeLB()">← Back to gallery</button>
+    <button class="lb-btn" id="lb-prev-btn" onclick="lbNav(-1)">← Prev</button>
+    <button class="lb-btn" id="lb-next-btn" onclick="lbNav(1)">Next →</button>
+  </div>
+</div>
+
+<script>
+// ── Photographer-red template: post-hydration init ────────────────────────────
+// Called by the shell after generic hydration is complete.
+// Receives the raw portfolio_content row.
+// This script may reference field keys — that's intentional (template-specific).
+
+let _galleryData = [];
+let _lbIdx       = 0;
+let _slideIdx    = 0;
+let _slideImages = [];
+let _slideTimer  = null;
+let _paused      = false;
+
+window.templateInit = function(content) {
+  document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+  // About image: the generic renderer sets img.src inside .about-img-frame;
+  // show the frame if an image was rendered.
+  const aboutFrame = document.querySelector('.about-img-frame');
+  if (aboutFrame) {
+    const img = aboutFrame.querySelector('img');
+    if (img && img.getAttribute('src')) aboutFrame.style.display = 'block';
+  }
+
+  // Hero slideshow — slides already built by generic renderer
+  const slides = Array.from(document.querySelectorAll('.hero-slide'));
+  const placeholder = document.getElementById('hero-placeholder');
+  if (slides.length > 0) {
+    if (placeholder) placeholder.style.display = 'none';
+    slides[0].classList.add('active');
+    _slideIdx = 0;
+    if (slides.length > 1) {
+      const sw = document.querySelector('.hero-slideshow');
+      const dotsWrap = document.createElement('div');
+      dotsWrap.className = 'hero-dots';
+      slides.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'hero-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+        dot.addEventListener('click', () => _goTo(i));
+        dotsWrap.appendChild(dot);
+      });
+      sw.appendChild(dotsWrap);
+      sw.addEventListener('mouseenter', () => { _paused = true; });
+      sw.addEventListener('mouseleave', () => { _paused = false; });
+      _slideImages = slides.map(s => s.querySelector('img')?.src).filter(Boolean);
+      _startTimer();
+    }
+  }
+
+  // Services: adjust grid columns + strip last border
+  const svcGrid = document.querySelector('.services-grid-inner');
+  if (svcGrid && svcGrid.children.length > 0) {
+    const n = svcGrid.children.length;
+    svcGrid.style.gridTemplateColumns = `repeat(${Math.min(n, 3)}, 1fr)`;
+    svcGrid.lastElementChild.style.borderRight = 'none';
+  }
+
+  // Gallery: apply positional classes, toggle img/ph visibility, wire lightbox
+  const CELL_CLASSES = ['c1','c2','c3','c4','c5','c6','c7','c8','c9','c10','c11','c12','c13','c14','c15'];
+  _galleryData = (content.gallery_images || []).map(item => ({ src: item.src || '', title: item.title || '', category: item.category || '' }));
+  const cells = Array.from(document.querySelectorAll('.gallery-grid .img-cell'));
+  let imageCount = 0;
+  cells.forEach((cell, i) => {
+    cell.classList.add(CELL_CLASSES[i % CELL_CLASSES.length]);
+    const img = cell.querySelector('img.cell-img');
+    const ph  = cell.querySelector('.img-ph-inner');
+    if (img && img.getAttribute('src')) { img.style.display = 'block'; if (ph) ph.style.display = 'none'; imageCount++; }
+    cell.onclick = () => openLB(i);
+  });
+  const countEl = document.getElementById('gallery-count');
+  if (countEl && imageCount > 0) countEl.textContent = imageCount + ' image' + (imageCount !== 1 ? 's' : '');
+
+  // Nav scroll active
+  const sections = document.querySelectorAll('#gallery,#about,#services,#contact');
+  const navLinks  = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let cur = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 110) cur = s.id; });
+    navLinks.forEach(a => { a.classList.remove('active'); if (a.getAttribute('href') === '#'+cur) a.classList.add('active'); });
+  }, {passive: true});
+
+  // Keyboard nav for lightbox
+  document.addEventListener('keydown', e => {
+    if (!document.getElementById('lightbox')?.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLB();
+    if (e.key === 'ArrowLeft')  lbNav(-1);
+    if (e.key === 'ArrowRight') lbNav(1);
+  });
+};
+
+function _startTimer() { clearInterval(_slideTimer); _slideTimer = setInterval(() => { if (!_paused) _goTo((_slideIdx + 1) % _slideImages.length); }, 4000); }
+function _goTo(idx) {
+  const slides = document.querySelectorAll('.hero-slide');
+  const dots   = document.querySelectorAll('.hero-dot');
+  slides[_slideIdx].classList.remove('active'); if(dots[_slideIdx])dots[_slideIdx].classList.remove('active');
+  _slideIdx = idx;
+  slides[_slideIdx].classList.add('active'); if(dots[_slideIdx])dots[_slideIdx].classList.add('active');
+}
+
+function openLB(idx) {
+  _lbIdx = idx;
+  _showLB(idx);
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  const hasMulti = _galleryData.filter(g => g.src || g.title).length > 1;
+  document.getElementById('lb-prev-btn').style.display = hasMulti ? '' : 'none';
+  document.getElementById('lb-next-btn').style.display = hasMulti ? '' : 'none';
+}
+function _showLB(idx) {
+  const item = _galleryData[idx];
+  const img  = document.getElementById('lb-img');
+  const ph   = document.getElementById('lb-ph');
+  if (item && item.src) {
+    img.src = window._imgUrl ? window._imgUrl(item.src) : item.src;
+    img.classList.add('lb-visible'); ph.classList.add('lb-hidden');
+  } else {
+    img.classList.remove('lb-visible'); img.src = '';
+    ph.classList.remove('lb-hidden');
+    document.getElementById('lb-label').textContent = (item?.category || '') + ' · placeholder';
+  }
+  document.getElementById('lb-title').textContent = item?.title || '';
+}
+function lbNav(dir) { _lbIdx = (_lbIdx + dir + _galleryData.length) % _galleryData.length; _showLB(_lbIdx); }
+function closeLB(e) {
+  if (e && e.target !== document.getElementById('lightbox')) return;
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+</script>

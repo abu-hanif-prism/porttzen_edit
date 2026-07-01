@@ -16,22 +16,62 @@ export default function CropModal({ src, initTx, initTy, initScale, onDone, onCa
   const [ty, setTy]       = useState(initTy);
   const previewRef = useRef<HTMLDivElement>(null);
   const drag = useRef<{ sx: number; sy: number; otx: number; oty: number } | null>(null);
+  const pinch = useRef<{ startDist: number; startScale: number } | null>(null);
 
   function maxT(s: number) { return 50 * (s - 1); }
   function clamp(v: number, s: number) { const m = maxT(s); return Math.max(-m, Math.min(m, v)); }
 
-  function down(e: React.MouseEvent) {
-    e.preventDefault();
-    drag.current = { sx: e.clientX, sy: e.clientY, otx: tx, oty: ty };
+  function down(clientX: number, clientY: number) {
+    drag.current = { sx: clientX, sy: clientY, otx: tx, oty: ty };
   }
-  function move(e: React.MouseEvent) {
+  function move(clientX: number, clientY: number) {
     if (!drag.current || !previewRef.current) return;
     const r   = previewRef.current.getBoundingClientRect();
-    const ntx = clamp(drag.current.otx + (e.clientX - drag.current.sx) / r.width  * 100, scale);
-    const nty = clamp(drag.current.oty + (e.clientY - drag.current.sy) / r.height * 100, scale);
+    const ntx = clamp(drag.current.otx + (clientX - drag.current.sx) / r.width  * 100, scale);
+    const nty = clamp(drag.current.oty + (clientY - drag.current.sy) / r.height * 100, scale);
     setTx(ntx); setTy(nty);
   }
   function up() { drag.current = null; }
+
+  function mouseDown(e: React.MouseEvent) { e.preventDefault(); down(e.clientX, e.clientY); }
+  function mouseMove(e: React.MouseEvent) { move(e.clientX, e.clientY); }
+
+  function touchStart(e: React.TouchEvent) {
+    const t = e.touches[0];
+    if (t) down(t.clientX, t.clientY);
+  }
+  function touchMove(e: React.TouchEvent) {
+    if (!drag.current) return;
+    const t = e.touches[0];
+    if (t) move(t.clientX, t.clientY);
+  }
+
+  function touchDistance(e: React.TouchEvent) {
+    const [a, b] = [e.touches[0], e.touches[1]];
+    return Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+  }
+  function pinchStart(e: React.TouchEvent) {
+    if (e.touches.length === 2) {
+      pinch.current = { startDist: touchDistance(e), startScale: scale };
+      drag.current = null;
+    } else {
+      touchStart(e);
+    }
+  }
+  function pinchMove(e: React.TouchEvent) {
+    if (e.touches.length === 2 && pinch.current) {
+      const ns = Math.max(1, Math.min(4, pinch.current.startScale * (touchDistance(e) / pinch.current.startDist)));
+      setScale(ns);
+      setTx(v => clamp(v, ns));
+      setTy(v => clamp(v, ns));
+    } else {
+      touchMove(e);
+    }
+  }
+  function pinchEnd(e: React.TouchEvent) {
+    if (e.touches.length < 2) pinch.current = null;
+    if (e.touches.length === 0) up();
+  }
 
   function wheel(e: React.WheelEvent) {
     e.preventDefault();
@@ -60,10 +100,11 @@ export default function CropModal({ src, initTx, initTy, initScale, onDone, onCa
         <div
           ref={previewRef}
           className="pz-crop-preview"
-          onMouseDown={down} onMouseMove={move}
+          onMouseDown={mouseDown} onMouseMove={mouseMove}
           onMouseUp={up} onMouseLeave={up}
+          onTouchStart={pinchStart} onTouchMove={pinchMove} onTouchEnd={pinchEnd}
           onWheel={wheel}
-          style={{ cursor: drag.current ? 'grabbing' : 'grab' }}
+          style={{ cursor: drag.current ? 'grabbing' : 'grab', touchAction: 'none' }}
         >
           <img
             src={src} draggable={false}

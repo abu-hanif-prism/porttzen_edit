@@ -8,6 +8,7 @@ import {
   repeaterAppend, repeaterRemove,
 } from './schema';
 import SchemaEditor from './SchemaEditor';
+import WysiwygEditor from './WysiwygEditor';
 
 export default function App() {
   return (
@@ -30,6 +31,7 @@ function EditPage() {
   const [saving,   setSaving]   = useState(false);
   const [saved,    setSaved]    = useState(false);
   const [toast,    setToast]    = useState('');
+  const [wysiwygUnavailable, setWysiwygUnavailable] = useState(false);
   const originalRef = useRef<PortfolioContent | null>(null);
 
   useEffect(() => {
@@ -170,18 +172,35 @@ function EditPage() {
         </div>
       )}
 
-      <SchemaEditor
-        schema={schema}
-        content={d}
-        subdomain={tokenRec!.subdomain}
-        token={token!}
-        disabled={saved}
-        onFieldChange={onFieldChange}
-        onRepeaterChange={onRepeaterChange}
-        onPatchRepeaterItem={onPatchRepeaterItem}
-        onRepeaterAdd={field => setD(prev => prev ? repeaterAppend(prev, field) : prev)}
-        onRepeaterRemove={(field, i) => setD(prev => prev ? repeaterRemove(prev, field, i) : prev)}
-      />
+      {wysiwygUnavailable || !d.template_id ? (
+        <SchemaEditor
+          schema={schema}
+          content={d}
+          subdomain={tokenRec!.subdomain}
+          token={token!}
+          disabled={saved}
+          onFieldChange={onFieldChange}
+          onRepeaterChange={onRepeaterChange}
+          onPatchRepeaterItem={onPatchRepeaterItem}
+          onRepeaterAdd={field => setD(prev => prev ? repeaterAppend(prev, field) : prev)}
+          onRepeaterRemove={(field, i) => setD(prev => prev ? repeaterRemove(prev, field, i) : prev)}
+        />
+      ) : (
+        <WysiwygEditor
+          schema={schema}
+          content={d}
+          templateId={d.template_id}
+          subdomain={tokenRec!.subdomain}
+          token={token!}
+          disabled={saved}
+          onFieldChange={onFieldChange}
+          onRepeaterChange={onRepeaterChange}
+          onPatchRepeaterItem={onPatchRepeaterItem}
+          onRepeaterAdd={field => setD(prev => prev ? repeaterAppend(prev, field) : prev)}
+          onRepeaterRemove={(field, i) => setD(prev => prev ? repeaterRemove(prev, field, i) : prev)}
+          onUnavailable={() => setWysiwygUnavailable(true)}
+        />
+      )}
 
       {toast && <div className="pz-toast">{toast}</div>}
     </div>

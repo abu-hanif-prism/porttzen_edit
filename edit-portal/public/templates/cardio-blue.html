@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dr. Sarah Mitchell — Cardiologist</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --white:#ffffff;--bg:#f7fafd;--bg2:#eef4fb;--bg3:#e2edf7;
+  --blue:#1a6bbd;--blue2:#2580d8;--blue-lt:#dbeeff;--blue-mid:#5ba3e0;
+  --blue-dim:rgba(26,107,189,0.08);--blue-bdr:rgba(26,107,189,0.15);
+  --ink:#0f1d2e;--ink2:#1e3a52;--ink3:#4a6880;--ink4:#8aaec8;--ink5:#c2d8ea;
+  --green:#1a9e6e;--font-d:'Lora',Georgia,serif;--font-b:'Plus Jakarta Sans',system-ui,sans-serif;--r:16px;--r-lg:24px;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-b);-webkit-font-smoothing:antialiased;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--ink5);display:flex;align-items:center;justify-content:space-between;padding:0 3.5rem;height:68px;}
+.nav-brand{display:flex;align-items:center;gap:1rem;}
+.nav-logo-icon{width:38px;height:38px;border-radius:10px;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:.9rem;color:var(--white);font-weight:700;font-family:var(--font-b);}
+.nav-name{font-size:.92rem;font-weight:700;color:var(--ink);}
+.nav-name span{font-weight:400;color:var(--ink3);}
+.nav-links{display:flex;gap:0;list-style:none;}
+.nav-links a{padding:.5rem 1.1rem;font-size:.8rem;font-weight:500;color:var(--ink3);text-decoration:none;border-radius:8px;transition:color .15s;}
+.nav-links a:hover{color:var(--blue);background:var(--blue-dim);}
+.nav-right{display:flex;align-items:center;gap:.75rem;}
+.nav-phone{font-size:.78rem;font-weight:600;color:var(--ink3);}
+.nav-appt{padding:.5rem 1.25rem;background:var(--blue);color:var(--white);font-family:var(--font-b);font-size:.78rem;font-weight:600;border:none;border-radius:999px;text-decoration:none;transition:background .15s;cursor:pointer;}
+.nav-appt:hover{background:var(--blue2);}
+.hero{padding-top:68px;min-height:100vh;display:grid;grid-template-columns:1fr 480px;background:var(--white);border-bottom:1px solid var(--ink5);position:relative;overflow:hidden;}
+.hero-left{padding:5rem 4rem 4rem 3.5rem;display:flex;flex-direction:column;justify-content:center;}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.38rem 1rem;background:var(--blue-lt);border:1px solid var(--blue-bdr);border-radius:999px;font-size:.72rem;font-weight:600;color:var(--blue);margin-bottom:2rem;width:fit-content;}
+.hero-badge-dot{width:6px;height:6px;background:var(--green);border-radius:50%;}
+.hero h1{font-family:var(--font-b);font-size:clamp(2.4rem,4vw,3.8rem);font-weight:800;line-height:1.1;letter-spacing:-.03em;color:var(--ink);margin-bottom:.75rem;}
+.hero h1 em{display:block;font-family:var(--font-d);font-style:italic;font-weight:400;color:var(--blue);font-size:clamp(1.6rem,2.8vw,2.6rem);letter-spacing:-.01em;margin-top:.25rem;}
+.hero-desc{font-size:.95rem;font-weight:300;color:var(--ink3);line-height:1.85;max-width:480px;margin:1.5rem 0 2.5rem;}
+.hero-actions{display:flex;gap:.85rem;flex-wrap:wrap;}
+.btn-primary{padding:.85rem 2rem;background:var(--blue);color:var(--white);font-family:var(--font-b);font-size:.85rem;font-weight:600;border:none;border-radius:var(--r);text-decoration:none;transition:background .15s;cursor:pointer;}
+.btn-primary:hover{background:var(--blue2);}
+.btn-secondary{padding:.85rem 2rem;background:transparent;color:var(--ink2);font-family:var(--font-b);font-size:.85rem;font-weight:500;border:1.5px solid var(--ink5);border-radius:var(--r);text-decoration:none;transition:border-color .15s,color .15s;cursor:pointer;}
+.btn-secondary:hover{border-color:var(--blue-mid);color:var(--blue);}
+.hero-trust{display:flex;gap:2.5rem;margin-top:3.5rem;padding-top:2rem;border-top:1px solid var(--ink5);}
+.trust-item{display:flex;flex-direction:column;gap:.25rem;}
+.trust-n{font-size:1.8rem;font-weight:800;color:var(--blue);letter-spacing:-.04em;line-height:1;}
+.trust-l{font-size:.72rem;font-weight:500;color:var(--ink4);}
+.hero-right{background:var(--bg2);border-left:1px solid var(--ink5);display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;}
+.hero-photo-ph{flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.85rem;padding:3rem 2rem 1rem;}
+.photo-circle{width:120px;height:120px;border-radius:50%;background:var(--bg3);border:2px dashed var(--ink5);display:flex;align-items:center;justify-content:center;font-size:2.5rem;color:var(--ink4);}
+.photo-ph-label{font-size:.75rem;color:var(--ink4);font-style:italic;}
+.hero-credentials{margin:1.5rem;background:var(--white);border-radius:var(--r);border:1px solid var(--ink5);padding:1.5rem;display:flex;flex-direction:column;gap:1rem;}
+.cred-row{display:flex;align-items:center;gap:.85rem;}
+.cred-icon{width:36px;height:36px;border-radius:10px;background:var(--blue-dim);border:1px solid var(--blue-bdr);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;}
+.cred-title{font-size:.8rem;font-weight:600;color:var(--ink);}
+.cred-sub{font-size:.72rem;color:var(--ink3);}
+.trust-bar{background:var(--blue);padding:1.25rem 3.5rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;}
+.trust-bar-item{display:flex;align-items:center;gap:.5rem;font-size:.78rem;font-weight:500;color:rgba(255,255,255,0.7);}
+.trust-bar-item::before{content:'✓';color:rgba(255,255,255,0.45);font-weight:700;}
+.trust-bar-item span{color:var(--white);font-weight:600;}
+.sec{padding:5.5rem 3.5rem;max-width:1200px;margin:0 auto;}
+.sec-eyebrow{font-size:.68rem;font-weight:700;color:var(--blue);letter-spacing:.16em;text-transform:uppercase;margin-bottom:.75rem;display:flex;align-items:center;gap:.65rem;}
+.sec-eyebrow::before{content:'';display:block;width:20px;height:2px;background:var(--blue);border-radius:2px;}
+.sec-title{font-family:var(--font-b);font-size:clamp(1.8rem,3vw,2.6rem);font-weight:800;letter-spacing:-.03em;color:var(--ink);line-height:1.15;margin-bottom:.5rem;}
+.sec-title em{font-family:var(--font-d);font-style:italic;font-weight:400;color:var(--blue);}
+.sec-sub{font-size:.9rem;font-weight:300;color:var(--ink3);line-height:1.8;max-width:520px;margin-bottom:3rem;}
+.spec-sec{background:var(--white);border-top:1px solid var(--ink5);border-bottom:1px solid var(--ink5);}
+.spec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--ink5);}
+.spec-card{background:var(--white);padding:2.5rem 2rem;transition:background .2s;position:relative;overflow:hidden;}
+.spec-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--blue);transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+.spec-card:hover{background:var(--bg);}
+.spec-card:hover::before{transform:scaleX(1);}
+.spec-icon{width:52px;height:52px;border-radius:14px;background:var(--blue-dim);border:1px solid var(--blue-bdr);display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:1.25rem;}
+.spec-card h3{font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:.5rem;}
+.spec-card p{font-size:.82rem;color:var(--ink3);line-height:1.8;font-weight:300;}
+.about-inner{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
+.about-img-main{width:100%;aspect-ratio:4/5;border-radius:var(--r-lg);background:var(--bg2);border:1px solid var(--ink5);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1rem;}
+.about-img-main-icon{font-size:3rem;color:var(--ink4);}
+.about-img-main-label{font-size:.72rem;color:var(--ink4);font-style:italic;}
+.about-quote-block{background:var(--blue-dim);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:1.25rem 1.5rem;font-family:var(--font-d);font-size:1.1rem;font-style:italic;color:var(--ink2);line-height:1.6;margin:1.5rem 0;}
+.about-text-col p{font-size:.88rem;color:var(--ink3);line-height:1.9;font-weight:300;margin-bottom:1rem;}
+.edu-list{display:flex;flex-direction:column;gap:.75rem;margin-top:1.5rem;}
+.edu-item{display:flex;align-items:flex-start;gap:.85rem;padding:.85rem 1rem;background:var(--bg);border-radius:var(--r);border:1px solid var(--ink5);}
+.edu-dot{width:8px;height:8px;border-radius:50%;background:var(--blue);flex-shrink:0;margin-top:.35rem;}
+.edu-item-title{font-size:.85rem;font-weight:600;color:var(--ink);}
+.edu-item-sub{font-size:.75rem;color:var(--ink3);margin-top:.15rem;}
+.timeline-sec{background:var(--white);border-top:1px solid var(--ink5);border-bottom:1px solid var(--ink5);}
+.timeline{display:flex;flex-direction:column;position:relative;}
+.timeline::before{content:'';position:absolute;left:110px;top:0;bottom:0;width:1px;background:var(--ink5);}
+.tl-row{display:grid;grid-template-columns:110px 1fr;gap:3rem;padding:2rem 0;border-bottom:1px solid var(--ink5);position:relative;}
+.tl-row:last-child{border-bottom:none;}
+.tl-row::before{content:'';position:absolute;left:105px;top:2.5rem;width:10px;height:10px;border-radius:50%;background:var(--blue);border:2px solid var(--white);box-shadow:0 0 0 3px var(--blue-bdr);z-index:1;}
+.tl-year{font-size:.78rem;font-weight:600;color:var(--ink4);padding-top:.35rem;}
+.tl-content h4{font-size:.95rem;font-weight:700;color:var(--ink);margin-bottom:.25rem;}
+.tl-content p{font-size:.82rem;color:var(--ink3);font-weight:300;line-height:1.75;}
+.tl-content-org{font-size:.78rem;color:var(--blue);font-weight:600;margin-bottom:.4rem;}
+.pubs-grid{display:flex;flex-direction:column;gap:1px;background:var(--ink5);border-radius:var(--r-lg);overflow:hidden;}
+.pub-row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:2rem;padding:1.5rem 2rem;background:var(--white);transition:background .15s;}
+.pub-row:hover{background:var(--bg);}
+.pub-journal{font-size:.68rem;font-weight:700;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.3rem;}
+.pub-title{font-size:.9rem;font-weight:600;color:var(--ink);line-height:1.4;margin-bottom:.25rem;}
+.pub-authors{font-size:.75rem;color:var(--ink3);font-weight:300;}
+.pub-year{font-size:.78rem;font-weight:600;color:var(--ink4);white-space:nowrap;}
+.testi-sec{background:var(--blue);}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+.testi-card{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:var(--r-lg);padding:2rem;display:flex;flex-direction:column;gap:1.25rem;}
+.testi-stars{color:rgba(255,220,100,0.9);font-size:.85rem;}
+.testi-text{font-family:var(--font-d);font-size:1rem;font-style:italic;color:rgba(255,255,255,0.9);line-height:1.75;}
+.testi-author{display:flex;align-items:center;gap:.75rem;margin-top:auto;}
+.testi-avatar{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;color:var(--white);flex-shrink:0;}
+.testi-author-name{font-size:.82rem;font-weight:600;color:var(--white);}
+.testi-author-label{font-size:.7rem;color:rgba(255,255,255,0.5);}
+.booking-sec{border-top:1px solid var(--ink5);}
+.booking-inner{display:grid;grid-template-columns:1fr 400px;gap:5rem;align-items:start;}
+.booking-left p{font-size:.88rem;color:var(--ink3);line-height:1.85;font-weight:300;margin-bottom:1.25rem;}
+.booking-info{display:flex;flex-direction:column;gap:.75rem;margin-top:2rem;}
+.b-info-row{display:flex;align-items:center;gap:.85rem;padding:.85rem 1.1rem;background:var(--bg);border-radius:var(--r);border:1px solid var(--ink5);text-decoration:none;transition:border-color .15s;}
+.b-info-row:hover{border-color:var(--blue-mid);}
+.b-icon{width:36px;height:36px;border-radius:10px;background:var(--blue-dim);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;}
+.b-text-label{font-size:.65rem;font-weight:700;color:var(--ink4);letter-spacing:.08em;text-transform:uppercase;}
+.b-text-val{font-size:.85rem;font-weight:600;color:var(--ink);}
+.booking-form{background:var(--white);border:1px solid var(--ink5);border-radius:var(--r-lg);padding:2rem;}
+.form-title{font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:1.5rem;}
+.form-group{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem;}
+.form-group label{font-size:.72rem;font-weight:600;color:var(--ink3);letter-spacing:.06em;text-transform:uppercase;}
+.form-group input,.form-group select,.form-group textarea{padding:.75rem 1rem;border:1.5px solid var(--ink5);border-radius:var(--r);font-family:var(--font-b);font-size:.85rem;color:var(--ink);background:var(--bg);outline:none;transition:border-color .15s;}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--blue);background:var(--white);}
+.form-group textarea{resize:vertical;min-height:90px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.form-submit{width:100%;padding:.9rem;background:var(--blue);color:var(--white);font-family:var(--font-b);font-size:.85rem;font-weight:700;border:none;border-radius:var(--r);cursor:pointer;margin-top:.5rem;transition:background .15s;}
+.form-submit:hover{background:var(--blue2);}
+.form-note{font-size:.7rem;color:var(--ink4);text-align:center;margin-top:.75rem;}
+footer{background:var(--ink);padding:3rem 3.5rem 2rem;}
+.footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:3rem;padding-bottom:2.5rem;border-bottom:1px solid rgba(255,255,255,0.08);}
+.footer-logo{font-size:.95rem;font-weight:700;color:var(--white);margin-bottom:.5rem;}
+.footer-brand p{font-size:.78rem;color:rgba(255,255,255,0.4);line-height:1.7;margin-top:.75rem;font-weight:300;}
+.footer-col h4{font-size:.7rem;font-weight:700;color:rgba(255,255,255,0.4);letter-spacing:.12em;text-transform:uppercase;margin-bottom:1rem;}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.6rem;}
+.footer-col ul li a{font-size:.82rem;color:rgba(255,255,255,0.5);text-decoration:none;transition:color .15s;}
+.footer-col ul li a:hover{color:var(--white);}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;padding-top:1.5rem;}
+.footer-bottom p{font-size:.72rem;color:rgba(255,255,255,0.3);}
+.footer-bottom span{font-size:.72rem;color:rgba(26,107,189,0.7);}
+@media(max-width:960px){
+  nav{padding:0 1.5rem;}.nav-links,.nav-phone{display:none;}
+  .hero{grid-template-columns:1fr;}.hero-right{display:none;}
+  .hero-left{padding:3.5rem 1.5rem 3rem;}
+  .sec{padding:4rem 1.5rem;}
+  .about-inner,.booking-inner{grid-template-columns:1fr;}
+  .spec-grid,.testi-grid{grid-template-columns:1fr 1fr;}
+  .footer-top{grid-template-columns:1fr 1fr;}
+  .footer-bottom{flex-direction:column;gap:.5rem;text-align:center;}
+  .timeline::before,.tl-row::before{display:none;}
+  .tl-row{grid-template-columns:1fr;gap:.5rem;}
+  .trust-bar{justify-content:center;}
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-brand">
+    <div class="nav-logo-icon" data-field="nav_initials">SM</div>
+    <div class="nav-name"><span data-field="logo_text">Dr. Sarah Mitchell</span> <span data-field="nav_credentials">MD, FACC</span></div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#specialties">Specialties</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#publications">Research</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <span class="nav-phone" data-field="nav_phone">+1 (212) 555-0182</span>
+    <a href="#contact" class="nav-appt" data-field="nav_cta_label">Book Appointment</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-badge"><span class="hero-badge-dot"></span> <span data-field="hero_eyebrow">Accepting new patients</span></div>
+    <h1><span data-field="hero_name" style="white-space:pre-line;">Cardiologist
+& Physician</span><br><em data-field="hero_name_italic">Dr. Sarah Mitchell</em></h1>
+    <p class="hero-desc" data-field="hero_subtitle">Board-certified cardiologist with 18 years of experience in interventional cardiology, heart failure management, and preventive cardiovascular care. Serving patients across New York and Connecticut.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary" data-field="hero_cta1_href"><span data-field="hero_cta1_label">Book a Consultation</span> →</a>
+      <a href="#about" class="btn-secondary" data-field="hero_cta2_href"><span data-field="hero_cta2_label">Learn More</span></a>
+    </div>
+    <div class="hero-trust" data-repeater="stats">
+      <div class="trust-item" data-repeater-item><span class="trust-n" data-subfield="number">18+</span><span class="trust-l" data-subfield="label">Years experience</span></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-photo-ph">
+      <div class="photo-circle" style="position:relative;"><img data-field="hero_photo" alt="" style="position:absolute;inset:0;width:100%;height:100%;border-radius:50%;object-fit:cover;"><span aria-hidden="true">◎</span></div>
+      <span class="photo-ph-label">Your photo here</span>
+    </div>
+    <div class="hero-credentials" data-repeater="hero_credentials">
+      <div class="cred-row" data-repeater-item><div class="cred-icon" data-subfield="icon">🏥</div><div><div class="cred-title" data-subfield="title">NewYork-Presbyterian Hospital</div><div class="cred-sub" data-subfield="subtitle">Senior Attending Cardiologist</div></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="trust-bar" data-repeater="trust_badges">
+  <div class="trust-bar-item" data-repeater-item><span data-subfield="highlight">Harvard Medical School</span> <span data-subfield="suffix">Graduate</span></div>
+</div>
+
+<div class="spec-sec" id="specialties">
+  <div class="sec" style="padding-bottom:0;">
+    <div class="sec-eyebrow" data-field="specialties_eyebrow">Areas of expertise</div>
+    <h2 class="sec-title" data-field="specialties_title">Clinical <em data-field="specialties_title_italic">Specialties</em></h2>
+    <p class="sec-sub" data-field="specialties_subtitle">Comprehensive cardiovascular care backed by the latest evidence-based medicine and minimally invasive techniques.</p>
+  </div>
+  <div class="spec-grid" data-repeater="services">
+    <div class="spec-card" data-repeater-item><div class="spec-icon" data-subfield="icon">❤️</div><h3 data-subfield="title">Interventional Cardiology</h3><p data-subfield="description">Coronary angioplasty, stent placement, and catheter-based procedures for coronary artery disease and acute MI management.</p></div>
+  </div>
+</div>
+
+<div class="sec" id="about">
+  <div class="about-inner">
+    <div>
+      <div class="about-img-main" style="position:relative;"><img data-field="about_image" alt="" style="position:absolute;inset:0;width:100%;height:100%;border-radius:var(--r-lg);object-fit:cover;"><div class="about-img-main-icon" aria-hidden="true">◎</div><span class="about-img-main-label">Your photo here</span></div>
+    </div>
+    <div class="about-text-col">
+      <div class="sec-eyebrow" data-field="about_eyebrow">About Dr. Mitchell</div>
+      <h2 class="sec-title" data-field="about_title">Medicine rooted in<br><em data-field="about_title_italic">compassion & science</em></h2>
+      <div class="about-quote-block" data-field="about_quote">"Every patient deserves a physician who listens first, and acts with both precision and humanity."</div>
+      <p data-field="about_bio_1">Dr. Sarah Mitchell is a board-certified cardiologist and Senior Attending Physician at NewYork-Presbyterian Hospital. With over 18 years of clinical experience, she specialises in interventional cardiology and heart failure.</p>
+      <p data-field="about_bio_2">She completed her MD at Harvard Medical School, residency at Johns Hopkins, and a cardiology fellowship at the Cleveland Clinic. She is a Fellow of the American College of Cardiology and has been named a Top Doctor by New York Magazine five consecutive years.</p>
+      <div class="edu-list" data-repeater="education">
+        <div class="edu-item" data-repeater-item><div class="edu-dot"></div><div><div class="edu-item-title" data-subfield="title">MD — Harvard Medical School</div><div class="edu-item-sub" data-subfield="subtitle">Doctor of Medicine · 2001–2005</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="timeline-sec" id="experience">
+  <div class="sec">
+    <div class="sec-eyebrow" data-field="experience_eyebrow">Career</div>
+    <h2 class="sec-title" data-field="experience_title">Professional <em data-field="experience_title_italic">Experience</em></h2>
+    <p class="sec-sub" data-field="experience_subtitle">A career built across leading academic medical centres and research institutions.</p>
+    <div class="timeline" data-repeater="experience">
+      <div class="tl-row" data-repeater-item><div class="tl-year" data-subfield="year">2015 — Now</div><div class="tl-content"><div class="tl-content-org" data-subfield="organization">NewYork-Presbyterian / Weill Cornell Medical Center</div><h4 data-subfield="role">Senior Attending Cardiologist & Associate Professor</h4><p data-subfield="description">Leading the interventional cardiology unit, managing complex cases including TAVR and structural heart procedures, directing a cardiac research programme with 12 active studies.</p></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="sec" id="publications">
+  <div class="sec-eyebrow" data-field="publications_eyebrow">Research</div>
+  <h2 class="sec-title" data-field="publications_title">Selected <em data-field="publications_title_italic">Publications</em></h2>
+  <p class="sec-sub" data-field="publications_subtitle">32 peer-reviewed publications across leading cardiology journals.</p>
+  <div class="pubs-grid" data-repeater="publications">
+    <div class="pub-row" data-repeater-item><div><div class="pub-journal" data-subfield="journal">New England Journal of Medicine · 2024</div><div class="pub-title" data-subfield="title">Long-term outcomes of TAVR vs. surgical aortic valve replacement in intermediate-risk patients: 10-year follow-up</div><div class="pub-authors" data-subfield="authors">Mitchell S, Chen R, Patel A, et al.</div></div><div class="pub-year" data-subfield="year">2024</div></div>
+  </div>
+</div>
+
+<div class="testi-sec">
+  <div class="sec">
+    <div class="sec-eyebrow" style="color:rgba(255,255,255,0.5);" data-field="testimonials_eyebrow">Patient reviews</div>
+    <h2 class="sec-title" style="color:var(--white);" data-field="testimonials_title">What patients <em style="color:rgba(255,255,255,0.6);" data-field="testimonials_title_italic">say</em></h2>
+    <p class="sec-sub" style="color:rgba(255,255,255,0.45);" data-field="testimonials_subtitle">Based on 480+ verified patient reviews across Zocdoc, Healthgrades, and Google.</p>
+    <div class="testi-grid" data-repeater="testimonials">
+      <div class="testi-card" data-repeater-item><div class="testi-stars" data-subfield="stars">★★★★★</div><div class="testi-text" data-subfield="text">"Dr. Mitchell took the time to explain my diagnosis in a way I could understand. After years of feeling dismissed, I finally felt heard. She's exceptional."</div><div class="testi-author"><div class="testi-avatar" data-subfield="initials">JR</div><div><div class="testi-author-name" data-subfield="name">James R.</div><div class="testi-author-label" data-subfield="label">Patient since 2019</div></div></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="sec booking-sec" id="contact">
+  <div class="booking-inner">
+    <div class="booking-left">
+      <div class="sec-eyebrow" data-field="contact_eyebrow">Get in touch</div>
+      <h2 class="sec-title" data-field="contact_heading">Book a <em data-field="contact_heading_italic">Consultation</em></h2>
+      <p data-field="contact_subtext">Whether you're seeking a second opinion, managing an existing condition, or a thorough cardiovascular check-up — I welcome new patients from all backgrounds.</p>
+      <p data-field="contact_subtext_2">Initial consultations are typically 45–60 minutes. Please bring any recent test results, imaging, or referral letters.</p>
+      <div class="booking-info" data-repeater="contact_links">
+        <a href="tel:+12125550182" class="b-info-row" data-repeater-item data-subfield="href"><div class="b-icon" data-subfield="icon">📞</div><div><div class="b-text-label" data-subfield="label">Phone</div><div class="b-text-val" data-subfield="value">+1 (212) 555-0182</div></div></a>
+      </div>
+    </div>
+    <div class="booking-form">
+      <div class="form-title">Request an Appointment</div>
+      <div class="form-row">
+        <div class="form-group"><label>First Name</label><input type="text" placeholder="John"></div>
+        <div class="form-group"><label>Last Name</label><input type="text" placeholder="Smith"></div>
+      </div>
+      <div class="form-group"><label>Email</label><input type="email" placeholder="john@email.com"></div>
+      <div class="form-group"><label>Phone</label><input type="tel" placeholder="+1 (212) 000-0000"></div>
+      <div class="form-group"><label>Reason for Visit</label><select><option>Select a reason</option><option>Initial Consultation</option><option>Second Opinion</option><option>Follow-up Appointment</option><option>Annual Cardiac Check-up</option><option>Referral from GP</option></select></div>
+      <div class="form-group"><label>Additional Notes</label><textarea placeholder="Any relevant symptoms, history, or questions..."></textarea></div>
+      <button class="form-submit">Request Appointment →</button>
+      <p class="form-note">We will contact you within 1 business day to confirm your appointment.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand"><div class="footer-logo" data-field="footer_name">Dr. Sarah Mitchell MD, FACC</div><p data-field="footer_bio">Board-certified Cardiologist at NewYork-Presbyterian Hospital. Providing expert, compassionate cardiovascular care in New York since 2011.</p></div>
+    <div class="footer-col"><h4>Navigation</h4><ul><li><a href="#about">About</a></li><li><a href="#specialties">Specialties</a></li><li><a href="#experience">Experience</a></li><li><a href="#publications">Research</a></li><li><a href="#contact">Contact</a></li></ul></div>
+    <div class="footer-col"><h4>Specialties</h4><ul><li><a href="#">Interventional Cardiology</a></li><li><a href="#">Heart Failure</a></li><li><a href="#">Preventive Cardiology</a></li><li><a href="#">Cardiac Imaging</a></li><li><a href="#">Women's Heart Health</a></li></ul></div>
+    <div class="footer-col"><h4>Contact</h4><ul><li><a href="tel:+12125550182">+1 (212) 555-0182</a></li><li><a href="#">dr.mitchell@nyphospital.org</a></li><li><a href="#">525 E 68th St, New York</a></li><li><a href="#">Mon–Fri, 8am–5pm</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><p>© 2026 Dr. Sarah Mitchell MD. All rights reserved.</p><span data-field="footer_status">NewYork-Presbyterian · Weill Cornell Medicine</span></div>
+</footer>
+</body>
+</html>

@@ -188,7 +188,7 @@ export default function SchemaEditor({
   // ── Render ──────────────────────────────────────────────────────────────────
 
   return (
-    <div style={{ fontFamily: 'var(--font-b)', color: 'var(--text)', padding: '2rem 3rem 3rem' }}>
+    <div className="pz-editor" style={{ fontFamily: 'var(--font-b)', color: 'var(--text)' }}>
       {crop && (
         <CropModal
           src={imgUrl(subdomain, crop.src)}

@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resume Template — Glass</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --g1:#0a0e27;
+  --g2:#0d1f3c;
+  --g3:#0e2d4a;
+  --g4:#112244;
+  --gold:#e8c56a;
+  --gold2:#f5d98a;
+  --gold3:rgba(232,197,106,0.15);
+  --gold4:rgba(232,197,106,0.25);
+  --teal:#4ecdc4;
+  --teal2:rgba(78,205,196,0.15);
+  --rose:#ff6b9d;
+  --rose2:rgba(255,107,157,0.12);
+  --glass:rgba(255,255,255,0.05);
+  --glass2:rgba(255,255,255,0.08);
+  --glass3:rgba(255,255,255,0.12);
+  --gb:rgba(255,255,255,0.06);
+  --text:#eef2ff;
+  --text2:#a8b8d8;
+  --text3:#5a7090;
+  --text4:rgba(255,255,255,0.08);
+  --fd:'Cormorant Garamond',serif;
+  --fb:'Outfit',system-ui,sans-serif;
+}
+
+html{scroll-behavior:smooth;}
+
+body{
+  font-family:var(--fb);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  background:var(--g1);
+}
+
+/* ── ANIMATED GRADIENT BG ── */
+.bg-canvas{
+  position:fixed;inset:0;z-index:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 10% 20%, #0d2a5e 0%, transparent 55%),
+    radial-gradient(ellipse 70% 50% at 90% 80%, #0a1f4a 0%, transparent 55%),
+    radial-gradient(ellipse 60% 70% at 50% 50%, #081828 0%, transparent 70%),
+    linear-gradient(145deg, #060d1f 0%, #0a1530 50%, #060d1f 100%);
+}
+.bg-orb{
+  position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0;
+}
+.orb1{width:600px;height:600px;top:-100px;left:-150px;background:radial-gradient(circle,rgba(14,50,100,0.6) 0%,transparent 70%);}
+.orb2{width:500px;height:500px;bottom:-100px;right:-100px;background:radial-gradient(circle,rgba(10,40,80,0.5) 0%,transparent 70%);}
+.orb3{width:400px;height:400px;top:40%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(20,60,120,0.3) 0%,transparent 70%);}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:1.25rem;left:50%;transform:translateX(-50%);
+  z-index:200;
+  display:flex;align-items:center;gap:0;
+  background:rgba(10,14,39,0.7);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:999px;
+  padding:.5rem .5rem .5rem 1.5rem;
+  backdrop-filter:blur(20px);
+  box-shadow:0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06);
+  white-space:nowrap;
+}
+.nav-name{
+  font-family:var(--fd);font-size:.9rem;font-weight:300;
+  letter-spacing:.1em;color:var(--gold);margin-right:1rem;
+  text-transform:uppercase;
+}
+.nav-links{display:flex;gap:0;list-style:none;}
+.nav-links a{
+  padding:.38rem .8rem;font-size:.7rem;font-weight:500;
+  color:var(--text3);text-decoration:none;
+  border-radius:999px;letter-spacing:.05em;
+  transition:color .15s,background .15s;
+}
+.nav-links a:hover{color:var(--text);background:var(--glass2);}
+.nav-links a.active{color:var(--gold);background:var(--gold3);}
+.nav-dl{
+  margin-left:.5rem;
+  padding:.45rem 1.1rem;
+  background:var(--gold);color:#0a0e27;
+  font-family:var(--fb);font-size:.68rem;font-weight:700;
+  border-radius:999px;text-decoration:none;
+  letter-spacing:.06em;text-transform:uppercase;
+  transition:background .15s;
+  display:flex;align-items:center;gap:.4rem;
+}
+.nav-dl:hover{background:var(--gold2);}
+.nav-dl svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2.5;}
+
+/* ── WRAPPER ── */
+.wrap{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 2rem;}
+
+/* ── GLASS CARD ── */
+.glass{
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:24px;
+  backdrop-filter:blur(24px);
+  box-shadow:
+    0 8px 32px rgba(0,0,0,0.3),
+    inset 0 1px 0 rgba(255,255,255,0.06),
+    inset 0 -1px 0 rgba(0,0,0,0.2);
+}
+.glass-hi{
+  background:var(--glass2);
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:20px;
+  backdrop-filter:blur(20px);
+  box-shadow:0 4px 24px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.08);
+}
+.glass-sm{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.07);
+  border-radius:14px;
+  backdrop-filter:blur(12px);
+}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;
+  padding:8rem 2rem 6rem;
+  position:relative;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.38rem 1.1rem;
+  background:var(--gold3);
+  border:1px solid var(--gold4);
+  border-radius:999px;
+  font-size:.68rem;font-weight:600;color:var(--gold);
+  letter-spacing:.1em;text-transform:uppercase;
+  margin-bottom:2.5rem;
+  backdrop-filter:blur(8px);
+}
+.hero-badge-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(232,197,106,0.5)}50%{opacity:.7;box-shadow:0 0 0 6px rgba(232,197,106,0)}}
+
+.hero h1{
+  font-family:var(--fd);
+  font-size:clamp(4rem,9vw,9rem);
+  font-weight:300;line-height:.88;
+  letter-spacing:-.01em;
+  color:var(--text);
+  margin-bottom:.75rem;
+}
+.hero h1 em{
+  font-style:italic;color:var(--gold);
+  display:block;font-weight:300;
+}
+.hero-sub{
+  font-family:var(--fd);
+  font-size:clamp(1rem,2vw,1.4rem);
+  font-weight:300;font-style:italic;
+  color:var(--text2);
+  margin-bottom:3rem;
+}
+.hero-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:4rem;}
+.hbtn{
+  padding:.75rem 2rem;border-radius:999px;
+  font-family:var(--fb);font-size:.78rem;font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase;
+  text-decoration:none;transition:all .2s;
+}
+.hbtn-gold{background:var(--gold);color:#0a0e27;}
+.hbtn-gold:hover{background:var(--gold2);transform:translateY(-2px);}
+.hbtn-ghost{
+  background:var(--glass2);color:var(--text2);
+  border:1px solid rgba(255,255,255,0.1);
+  backdrop-filter:blur(8px);
+}
+.hbtn-ghost:hover{background:var(--glass3);color:var(--text);transform:translateY(-2px);}
+
+/* Hero stat strip */
+.hero-stats{
+  display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;
+}
+.hstat{
+  padding:.85rem 1.5rem;
+  text-align:center;
+  min-width:120px;
+}
+.hstat-n{font-family:var(--fd);font-size:1.8rem;font-weight:300;color:var(--gold);line-height:1;letter-spacing:-.02em;}
+.hstat-l{font-size:.62rem;font-weight:500;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-top:.3rem;}
+
+/* ── EXAM STATUS ── */
+.exam-strip{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;
+  padding:3rem 0 1rem;
+  position:relative;z-index:1;
+}
+.exam-card{
+  padding:1.5rem 1.25rem;
+  text-align:center;
+  position:relative;overflow:hidden;
+  transition:transform .2s;
+}
+.exam-card:hover{transform:translateY(-4px);}
+.exam-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.exam-card-icon{font-size:1.5rem;margin-bottom:.75rem;}
+.exam-card-name{font-family:var(--fd);font-size:1rem;font-weight:400;color:var(--text);margin-bottom:.3rem;}
+.exam-card-status{font-size:.62rem;font-weight:700;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;}
+.exam-card-desc{font-size:.7rem;color:var(--text3);margin-top:.4rem;line-height:1.5;}
+
+/* ── SECTIONS ── */
+.section{padding:5rem 0;position:relative;z-index:1;scroll-margin-top:90px;}
+.sec-header{text-align:center;margin-bottom:3rem;}
+.sec-eyebrow{
+  font-size:.62rem;font-weight:600;color:var(--gold);
+  letter-spacing:.18em;text-transform:uppercase;
+  margin-bottom:.75rem;display:flex;align-items:center;
+  justify-content:center;gap:.75rem;
+}
+.sec-eyebrow::before,.sec-eyebrow::after{content:'';display:block;width:32px;height:1px;background:var(--gold3);}
+.sec-title{
+  font-family:var(--fd);
+  font-size:clamp(2rem,4vw,3.2rem);
+  font-weight:300;color:var(--text);
+  letter-spacing:.01em;
+}
+.sec-title em{font-style:italic;color:var(--gold);}
+.sec-sub{font-size:.85rem;color:var(--text2);font-weight:300;max-width:500px;margin:.75rem auto 0;line-height:1.8;}
+
+/* ── EXPERIENCE ── */
+.exp-list{display:flex;flex-direction:column;gap:1rem;}
+.exp-card{
+  padding:2rem 2.25rem;
+  display:grid;grid-template-columns:1fr auto;
+  gap:2rem;align-items:start;
+  transition:transform .2s,box-shadow .2s;
+}
+.exp-card:hover{transform:translateY(-3px);box-shadow:0 16px 48px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.1);}
+.exp-role{font-family:var(--fd);font-size:1.3rem;font-weight:400;color:var(--text);margin-bottom:.25rem;}
+.exp-org{font-size:.75rem;font-weight:600;color:var(--gold);letter-spacing:.04em;margin-bottom:.65rem;display:flex;align-items:center;gap:.5rem;}
+.exp-tag{font-size:.6rem;font-weight:600;padding:.12rem .45rem;border:1px solid rgba(255,255,255,0.1);color:var(--text3);border-radius:4px;}
+.exp-desc{font-size:.82rem;color:var(--text2);line-height:1.85;font-weight:300;margin-bottom:.7rem;}
+.exp-bullets{display:flex;flex-direction:column;gap:.35rem;}
+.exp-bullet{font-size:.78rem;color:var(--text2);line-height:1.7;font-weight:300;display:flex;gap:.6rem;}
+.exp-bullet::before{content:'◆';color:var(--gold);font-size:.4rem;flex-shrink:0;margin-top:.4rem;}
+.exp-date{
+  padding:.35rem .9rem;
+  background:var(--gold3);border:1px solid var(--gold4);
+  border-radius:999px;
+  font-size:.65rem;font-weight:600;color:var(--gold);
+  white-space:nowrap;height:fit-content;letter-spacing:.04em;
+}
+.exp-date.curr{background:var(--gold);color:#0a0e27;}
+
+/* ── EDUCATION ── */
+.edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.edu-card{
+  padding:1.75rem 2rem;
+  transition:transform .2s;
+  position:relative;overflow:hidden;
+}
+.edu-card:hover{transform:translateY(-3px);}
+.edu-card::after{
+  content:'';position:absolute;
+  bottom:0;right:0;
+  width:80px;height:80px;
+  background:radial-gradient(circle,var(--gold3) 0%,transparent 70%);
+}
+.edu-yr{font-size:.6rem;font-weight:600;color:var(--gold);letter-spacing:.1em;margin-bottom:.85rem;}
+.edu-degree{font-family:var(--fd);font-size:1.15rem;font-weight:400;color:var(--text);margin-bottom:.25rem;line-height:1.25;}
+.edu-school{font-size:.75rem;font-weight:500;color:var(--text2);margin-bottom:.35rem;}
+.edu-detail{font-size:.7rem;color:var(--text3);}
+.edu-pill{
+  display:inline-block;margin-top:.65rem;
+  font-size:.6rem;font-weight:700;color:var(--gold);
+  padding:.2rem .6rem;border:1px solid var(--gold4);
+  background:var(--gold3);border-radius:999px;letter-spacing:.06em;
+}
+
+/* ── SKILLS ── */
+.skills-glass{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;
+}
+.skill-card{padding:1.75rem;transition:transform .2s;}
+.skill-card:hover{transform:translateY(-3px);}
+.skill-icon{font-size:1.4rem;margin-bottom:.85rem;}
+.skill-head{font-size:.65rem;font-weight:700;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;margin-bottom:1rem;padding-bottom:.65rem;border-bottom:1px solid rgba(255,255,255,0.06);}
+.skill-items{display:flex;flex-wrap:wrap;gap:.4rem;}
+.skill-pill{
+  padding:.28rem .72rem;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:999px;
+  font-size:.7rem;font-weight:400;color:var(--text2);
+  transition:all .15s;
+}
+.skill-pill:hover{background:var(--gold3);border-color:var(--gold4);color:var(--gold);}
+.skill-pill.hi{background:var(--gold3);border-color:var(--gold4);color:var(--gold);font-weight:600;}
+
+/* ── PROJECTS ── */
+.proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.proj-card{
+  padding:2rem;display:flex;flex-direction:column;gap:.85rem;
+  transition:transform .2s;position:relative;overflow:hidden;
+}
+.proj-card:hover{transform:translateY(-4px);}
+.proj-card::before{
+  content:'';position:absolute;top:-1px;left:15%;right:15%;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.proj-num{font-family:var(--fd);font-size:2.5rem;font-weight:200;color:rgba(232,197,106,0.15);line-height:1;}
+.proj-title{font-family:var(--fd);font-size:1.15rem;font-weight:400;color:var(--text);line-height:1.3;}
+.proj-desc{font-size:.78rem;color:var(--text2);line-height:1.85;font-weight:300;flex:1;}
+.proj-footer{display:flex;align-items:center;justify-content:space-between;}
+.proj-tags{display:flex;gap:.35rem;flex-wrap:wrap;}
+.proj-tag{font-size:.58rem;font-weight:600;color:var(--gold);padding:.15rem .5rem;border:1px solid var(--gold4);border-radius:4px;background:var(--gold3);letter-spacing:.06em;text-transform:uppercase;}
+.proj-link{font-size:.68rem;font-weight:600;color:var(--text3);text-decoration:none;padding:.35rem .8rem;border:1px solid rgba(255,255,255,0.08);border-radius:999px;transition:all .15s;background:rgba(255,255,255,0.03);}
+.proj-link:hover{color:var(--gold);border-color:var(--gold4);background:var(--gold3);}
+
+/* ── CERTIFICATIONS ── */
+.cert-list{display:flex;flex-direction:column;gap:.75rem;}
+.cert-card{
+  display:grid;grid-template-columns:48px 1fr auto;
+  align-items:center;gap:1.25rem;
+  padding:1.25rem 1.75rem;
+  transition:transform .2s;
+}
+.cert-card:hover{transform:translateX(4px);}
+.cert-icon-wrap{
+  width:48px;height:48px;border-radius:12px;
+  background:var(--gold3);border:1px solid var(--gold4);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;flex-shrink:0;
+}
+.cert-name{font-family:var(--fd);font-size:.95rem;font-weight:400;color:var(--text);margin-bottom:.18rem;}
+.cert-issuer{font-size:.68rem;color:var(--text3);font-weight:300;}
+.cert-meta{text-align:right;}
+.cert-yr{font-size:.68rem;font-weight:600;color:var(--text3);margin-bottom:.25rem;}
+.cert-status{font-size:.58rem;font-weight:700;color:var(--gold);padding:.15rem .5rem;border:1px solid var(--gold4);background:var(--gold3);border-radius:4px;letter-spacing:.06em;}
+
+/* ── CONTACT ── */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.contact-card{
+  display:flex;align-items:center;gap:1rem;
+  padding:1.5rem 1.75rem;text-decoration:none;
+  transition:transform .2s,box-shadow .2s;
+  border-radius:20px;
+}
+.contact-card:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,0.35);}
+.cc-icon{
+  width:46px;height:46px;border-radius:12px;
+  background:var(--gold3);border:1px solid var(--gold4);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;flex-shrink:0;
+}
+.cc-lbl{font-size:.6rem;font-weight:700;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.2rem;}
+.cc-val{font-size:.88rem;font-weight:500;color:var(--text);}
+.cc-arr{margin-left:auto;font-size:.9rem;color:var(--text3);transition:transform .15s,color .15s;}
+.contact-card:hover .cc-arr{transform:translate(3px,-3px);color:var(--gold);}
+
+/* ── DOWNLOAD ── */
+.dl-section{
+  padding:4rem 0 6rem;
+  text-align:center;
+  position:relative;z-index:1;
+}
+.dl-card{
+  max-width:600px;margin:0 auto;
+  padding:3rem;
+  position:relative;overflow:hidden;
+}
+.dl-card::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 0%,rgba(232,197,106,0.08) 0%,transparent 60%);
+}
+.dl-title{font-family:var(--fd);font-size:2.5rem;font-weight:300;font-style:italic;color:var(--text);margin-bottom:.5rem;position:relative;}
+.dl-sub{font-size:.78rem;color:var(--text3);font-weight:300;margin-bottom:2rem;position:relative;}
+.dl-btn{
+  display:inline-flex;align-items:center;gap:.6rem;
+  padding:.9rem 2.5rem;background:var(--gold);color:#0a0e27;
+  font-family:var(--fb);font-size:.78rem;font-weight:700;
+  border-radius:999px;text-decoration:none;
+  letter-spacing:.08em;text-transform:uppercase;
+  transition:all .2s;position:relative;
+  box-shadow:0 8px 32px rgba(232,197,106,0.25);
+}
+.dl-btn:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 12px 40px rgba(232,197,106,0.35);}
+.dl-btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;}
+
+/* ── FOOTER ── */
+footer{
+  position:relative;z-index:1;
+  border-top:1px solid rgba(255,255,255,0.06);
+  padding:1.75rem 2rem;
+  display:flex;align-items:center;justify-content:space-between;
+  max-width:1100px;margin:0 auto;
+}
+.footer-logo{font-family:var(--fd);font-size:.95rem;font-weight:300;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);}
+footer p{font-size:.68rem;color:var(--text3);}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:linear-gradient(90deg,transparent,rgba(232,197,106,0.15),transparent);margin:0;}
+
+section{scroll-margin-top:90px;}
+
+@media(max-width:900px){
+  nav{width:calc(100% - 2rem);border-radius:16px;top:.75rem;}
+  .nav-links{display:none;}
+  .hero{padding:7rem 1.5rem 4rem;}
+  .exam-strip{grid-template-columns:1fr 1fr;padding:2rem 1.5rem 1rem;}
+  .wrap{padding:0 1.25rem;}
+  .exp-card{grid-template-columns:1fr;}
+  .edu-grid,.skills-glass,.proj-grid,.contact-grid{grid-template-columns:1fr;}
+  .cert-card{grid-template-columns:40px 1fr;}.cert-meta{display:none;}
+  footer{flex-direction:column;gap:.5rem;text-align:center;padding:1.25rem;}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-canvas"></div>
+<div class="bg-orb orb1"></div>
+<div class="bg-orb orb2"></div>
+<div class="bg-orb orb3"></div>
+
+<!-- NAV (links are fixed in-page navigation chrome; only the name is editable) -->
+<nav>
+  <div class="nav-name" data-field="logo_text">Your Name</div>
+  <ul class="nav-links">
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#download" class="nav-dl">
+    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+    CV
+  </a>
+</nav>
+
+<!-- HERO -->
+<div class="wrap">
+<div class="hero" id="about">
+  <div class="hero-badge"><span class="hero-badge-dot"></span> <span data-field="hero_eyebrow">Your tagline here</span></div>
+  <h1><span data-field="hero_name">Your</span><br><em data-field="hero_name_italic">Name.</em></h1>
+  <p class="hero-sub" data-field="hero_subtitle">Your role · Your focus · Your goal</p>
+  <div class="hero-actions">
+    <a href="#experience" class="hbtn hbtn-gold" data-field="hero_cta1_href"><span data-field="hero_cta1_label">View Profile</span></a>
+    <a href="#contact" class="hbtn hbtn-ghost" data-field="hero_cta2_href"><span data-field="hero_cta2_label">Get in Touch</span></a>
+  </div>
+  <div class="hero-stats" data-repeater="stats">
+    <div class="hstat glass-sm" data-repeater-item>
+      <div class="hstat-n" data-subfield="value">00</div>
+      <div class="hstat-l" data-subfield="label">Stat label</div>
+    </div>
+  </div>
+</div>
+
+<!-- EXAM STATUS / HIGHLIGHT STRIP -->
+<div class="exam-strip" data-repeater="exam_status">
+  <div class="exam-card glass" data-repeater-item>
+    <div class="exam-card-icon" data-subfield="icon">🏛️</div>
+    <div class="exam-card-name" data-subfield="name">Highlight title</div>
+    <div class="exam-card-status" data-subfield="status">Status</div>
+    <div class="exam-card-desc" data-subfield="desc">Short supporting detail here</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- EXPERIENCE (section header is fixed template chrome) -->
+<section class="section" id="experience">
+  <div class="sec-header">
+    <div class="sec-eyebrow">Professional Journey</div>
+    <h2 class="sec-title">Work <em>Experience</em></h2>
+    <p class="sec-sub">A short fixed description of this section.</p>
+  </div>
+  <div class="exp-list" data-repeater="experience">
+    <div class="exp-card glass" data-repeater-item>
+      <div>
+        <div class="exp-role" data-subfield="role">Your role</div>
+        <div class="exp-org"><span data-subfield="org">Your organization</span> <span class="exp-tag" data-subfield="tag">Type</span></div>
+        <div class="exp-desc" data-subfield="desc">Describe your responsibilities and scope here.</div>
+        <div class="exp-bullets"><div class="exp-bullet" data-subfield="bullets" style="white-space:pre-line">Your key achievements — one per line</div></div>
+      </div>
+      <span class="exp-date" data-subfield="date">Year — Year</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EDUCATION -->
+<section class="section" id="education">
+  <div class="sec-header">
+    <div class="sec-eyebrow">Academic Background</div>
+    <h2 class="sec-title">Edu<em>cation</em></h2>
+    <p class="sec-sub">A short fixed description of this section.</p>
+  </div>
+  <div class="edu-grid" data-repeater="education">
+    <div class="edu-card glass" data-repeater-item>
+      <div class="edu-yr" data-subfield="yr">Year — Year</div>
+      <div class="edu-degree" data-subfield="degree">Your degree</div>
+      <div class="edu-school" data-subfield="school">Your institution</div>
+      <div class="edu-detail" data-subfield="detail">Grade · short detail here</div>
+      <span class="edu-pill" data-subfield="pill">Highlight</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section class="section" id="skills">
+  <div class="sec-header">
+    <div class="sec-eyebrow">Capabilities</div>
+    <h2 class="sec-title">Skills & <em>Expertise</em></h2>
+    <p class="sec-sub">A short fixed description of this section.</p>
+  </div>
+  <div class="skills-glass" data-repeater="skills">
+    <div class="skill-card glass" data-repeater-item>
+      <div class="skill-icon" data-subfield="icon">🏛️</div>
+      <div class="skill-head" data-subfield="head">Category name</div>
+      <div class="skill-items"><span class="skill-pill" data-subfield="items" style="white-space:pre-line">Skill one, Skill two, Skill three</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section class="section" id="projects">
+  <div class="sec-header">
+    <div class="sec-eyebrow">Research & Work</div>
+    <h2 class="sec-title">Key <em>Projects</em></h2>
+    <p class="sec-sub">A short fixed description of this section.</p>
+  </div>
+  <div class="proj-grid" data-repeater="projects">
+    <div class="proj-card glass" data-repeater-item>
+      <div class="proj-num" data-subfield="num">01</div>
+      <div class="proj-title" data-subfield="title">Project title</div>
+      <div class="proj-desc" data-subfield="desc">Describe the project, your role, and the outcome here.</div>
+      <div class="proj-footer">
+        <div class="proj-tags"><span class="proj-tag" data-subfield="tags">Tag · Tag</span></div>
+        <a href="#" class="proj-link" data-subfield="link_href"><span data-subfield="link_label">View ↗</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CERTIFICATIONS -->
+<section class="section" id="certifications">
+  <div class="sec-header">
+    <div class="sec-eyebrow">Credentials</div>
+    <h2 class="sec-title">Certifi<em>cations</em></h2>
+    <p class="sec-sub">A short fixed description of this section.</p>
+  </div>
+  <div class="cert-list" data-repeater="certifications">
+    <div class="cert-card glass" data-repeater-item>
+      <div class="cert-icon-wrap" data-subfield="icon">🏛️</div>
+      <div>
+        <div class="cert-name" data-subfield="name">Certification name</div>
+        <div class="cert-issuer" data-subfield="issuer">Issuing body</div>
+      </div>
+      <div class="cert-meta">
+        <div class="cert-yr" data-subfield="yr">Year</div>
+        <span class="cert-status" data-subfield="status">Status</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="sec-header">
+    <div class="sec-eyebrow">Reach Out</div>
+    <h2 class="sec-title"><span data-field="contact_heading">Get in</span> <em data-field="contact_heading_italic">Touch</em></h2>
+    <p class="sec-sub" data-field="contact_subtext">Your availability note here.</p>
+  </div>
+  <div class="contact-grid" data-repeater="contact_links">
+    <a href="#" class="contact-card glass" data-repeater-item data-subfield="href">
+      <div class="cc-icon" data-subfield="icon">✉️</div>
+      <div>
+        <div class="cc-lbl" data-subfield="label">Label</div>
+        <div class="cc-val" data-subfield="value">your value here</div>
+      </div>
+      <span class="cc-arr">↗</span>
+    </a>
+  </div>
+</section>
+
+<!-- DOWNLOAD -->
+<div class="dl-section" id="download">
+  <div class="dl-card glass">
+    <div class="dl-title" data-field="cv_title">Download Full CV</div>
+    <div class="dl-sub" data-field="cv_subtext">PDF format · short detail here</div>
+    <a href="#" class="dl-btn" data-field="cv_button_href">
+      <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+      <span data-field="cv_button_label">Download CV (PDF)</span>
+    </a>
+  </div>
+</div>
+
+</div><!-- wrap -->
+
+<footer>
+  <div class="footer-logo" data-field="footer_name">Your Name</div>
+  <p data-field="footer_status">© 2026 · Your tagline</p>
+  <p data-field="footer_location">Your City, Country</p>
+</footer>
+
+<script>
+const secs=document.querySelectorAll('section[id], div[id="about"]');
+const navAs=document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  secs.forEach(s=>{if(window.scrollY>=s.offsetTop-110)cur=s.id;});
+  navAs.forEach(a=>{a.classList.remove('active');if(a.getAttribute('href')==='#'+cur)a.classList.add('active');});
+},{passive:true});
+</script>
+</body>
+</html>
