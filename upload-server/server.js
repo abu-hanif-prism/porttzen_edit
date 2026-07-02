@@ -18,7 +18,7 @@ const sb = createClient(
 
 // ── CORS ──────────────────────────────────────────────────────────────────────
 const allowed = [
-  'https://edit.md-hanif.xyz',
+  'https://edit.portzenx.com',
   'http://localhost:5173',
   'http://localhost:4173',
 ];

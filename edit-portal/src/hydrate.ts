@@ -10,7 +10,7 @@ export function imgUrl(subdomain: string, src: string): string {
   if (src.startsWith('http')) return src;
   return import.meta.env.DEV
     ? `http://localhost:3000/${src}`
-    : `https://${subdomain}.md-hanif.xyz/${src}`;
+    : `https://${subdomain}.portzenx.com/${src}`;
 }
 
 function buildFieldMap(schema: TemplateSchema): Record<string, FieldDef> {

@@ -43,9 +43,9 @@ function EditPage() {
     const { data: td, error: te } = await supabase
       .from('edit_tokens').select('*').eq('token', tok).single();
 
-    if (te || !td) return fail('Link not found. Request a new one from md-hanif.xyz');
-    if (td.used)   return fail('This link has already been used. Request a new one from md-hanif.xyz');
-    if (new Date(td.expires_at) < new Date()) return fail('This link has expired. Request a new one from md-hanif.xyz');
+    if (te || !td) return fail('Link not found. Request a new one from portzenx.com');
+    if (td.used)   return fail('This link has already been used. Request a new one from portzenx.com');
+    if (new Date(td.expires_at) < new Date()) return fail('This link has expired. Request a new one from portzenx.com');
 
     setTokenRec(td as EditToken);
 
@@ -110,7 +110,7 @@ function EditPage() {
       if (error) throw error;
       await supabase.from('edit_tokens').update({ used: true }).eq('id', tokenRec.id);
       setSaved(true);
-      setToast(`Portfolio updated! Live at ${tokenRec.subdomain}.md-hanif.xyz`);
+      setToast(`Portfolio updated! Live at ${tokenRec.subdomain}.portzenx.com`);
       setTimeout(() => setToast(''), 5000);
     } catch (err) {
       setToast('Save failed. Please try again.');
@@ -134,7 +134,7 @@ function EditPage() {
       <div style={{ fontSize:'3rem', color:'var(--bg4)' }}>✕</div>
       <p className="pz-err-title">Link Expired or Invalid</p>
       <p className="pz-err-msg">{errMsg}</p>
-      <a href="https://md-hanif.xyz" className="pz-err-link">Request a new link</a>
+      <a href="https://portzenx.com" className="pz-err-link">Request a new link</a>
     </div>
   );
 
@@ -148,7 +148,7 @@ function EditPage() {
 
   const liveUrl = import.meta.env.DEV
     ? `http://localhost:3000?sub=${tokenRec!.subdomain}`
-    : `https://${tokenRec!.subdomain}.md-hanif.xyz`;
+    : `https://${tokenRec!.subdomain}.portzenx.com`;
 
   return (
     <div>
@@ -167,8 +167,8 @@ function EditPage() {
       {saved && (
         <div className="pz-saved-banner" style={{ marginTop: '52px' }}>
           Portfolio updated — live at{' '}
-          <a href={liveUrl} target="_blank" rel="noreferrer">{tokenRec!.subdomain}.md-hanif.xyz</a>.
-          &nbsp;Edit link used. Request a new one from md-hanif.xyz
+          <a href={liveUrl} target="_blank" rel="noreferrer">{tokenRec!.subdomain}.portzenx.com</a>.
+          &nbsp;Edit link used. Request a new one from portzenx.com
         </div>
       )}
 
@@ -211,7 +211,7 @@ function NotFound() {
   return (
     <div className="pz-center">
       <p style={{ fontFamily:'var(--font-b)', fontSize:'.85rem', color:'var(--text3)' }}>
-        Visit <strong>edit.md-hanif.xyz/your-token</strong> to edit your portfolio.
+        Visit <strong>edit.portzenx.com/your-token</strong> to edit your portfolio.
       </p>
     </div>
   );
