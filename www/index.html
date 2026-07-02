@@ -230,10 +230,21 @@ async function initPortfolio() {
     }
 
     showPortfolio();
+    recordVisit(sb, content.customer_id, sub);
   } catch (err) {
     console.error('Portfolio init error:', err);
     showComingSoon();
   }
+}
+
+// ── Visit tracking (one increment per visitor per day, best-effort) ───────────
+function recordVisit(sb, customerId, sub) {
+  if (!customerId) return;
+  const key = 'pz-visited-' + sub + '-' + new Date().toISOString().slice(0, 10);
+  if (localStorage.getItem(key)) return;
+  localStorage.setItem(key, '1');
+  sb.rpc('record_portfolio_visit', { p_customer_id: customerId })
+    .then(({ error }) => { if (error) console.error('Visit tracking error:', error); });
 }
 </script>
 </body>
